@@ -36,11 +36,21 @@ class PozoCommand
 
   float exe_read1wtemp(int sensor);
   int exe_sethigh(int pinnum);
-  int exe_setlow(int pinnum);
-  int exe_setbinary(char pinnum);
+  int exe_setlow(int pinnum, time_t period = 60);
+  // set pin high low according the byte, highest bit is relay no.1 
+  // period is in seconds
+  // after period all pins set to low will be set to high
+  // high pins stay unchanged 
+  int exe_setbinary(char pinnum, time_t period = 60);
+  
+  int exe_pinstatus_pins();
+  int exe_pinstatus_time();
+
+  int check_time(time_t acttm);
+  
   private:
   int parse_value(char* str);
-  
+   
   int exe_onewire_list();
   char* exe_onewire_addr(int num);
 

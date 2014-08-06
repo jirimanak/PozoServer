@@ -1,7 +1,7 @@
 /*
 * PozoCodes.h
 *
-* Created on: 03/08/2014
+* Created on: 06/08/2014
 * Author: Norad Sparta
 */
 
@@ -13,6 +13,7 @@
 #define READ1WADDR 122
 #define GETTIME    106
 #define PING       103
+#define PINSTATUS  111
 #define NULLPTR    25
 #define PONG       104
 #define TIMEDATE   'T'
@@ -48,4 +49,3 @@
 
 
 #endif /* POZOCODES_H_ */
-

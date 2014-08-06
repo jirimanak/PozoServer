@@ -129,6 +129,7 @@ int parse(char* str, PozoCommand *pc) {
         ++i;
         break;
       case TIMEDATE:
+        // time is in microseconds from 1.1.1970
         Serial.print("TIMEDATE: ");
         if (i >= VALUE_MAXIDX) break;
         pc->value[i].value_type = vtype;
@@ -185,13 +186,15 @@ int parse(char* str, PozoCommand *pc) {
 void loop(){
   char *response;
 
+  pc.check_time(now());
+  
   if (params = e.serviceRequest())
   {
     pc.reset();
     Serial.print("params: ");
     Serial.println(params);
 
-    parse(params, &pc);
+    pc.parse(params);
     response = pc.execute();
     Serial.print("RESPONSE: ");
     Serial.println(response);
