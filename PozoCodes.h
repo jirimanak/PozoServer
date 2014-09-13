@@ -52,10 +52,12 @@
 #define STRVALUE   'R'
 #define TESTSERVER 504
 #define TIMEDATE   'T'
+#define UPTIME     125
 
 /* OTHER CONSTANTS */
 
-#define HEADERVERSION 101
+#define HEADERVERSION 102
+
 
 #endif /* POZOCODES_H_ */
 

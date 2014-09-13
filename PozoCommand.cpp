@@ -7,6 +7,8 @@
 #include <string.h>
 #include <Time.h>
 
+extern long int start_time;
+
 PozoCommand::PozoCommand():
 onewire()
 { 
@@ -267,7 +269,8 @@ float PozoCommand::exe_read1wtemp(int sensor){
 char* PozoCommand::execute(){
   char* ptr = response;
   int len;
-
+  int running;
+  
   if (errorcode != OK) 
   {
     // sprintf(response,"%c[%l]",ERRORCODE,errorcode);
@@ -290,7 +293,9 @@ char* PozoCommand::execute(){
     case PING:
       break;
     case SET_TIME:
+      running = now() - start_time;
       setTime(value[0].value.timedate_value);
+      start_time = now()- running;
       ptr = add_code_and_time(ptr, TIMEDATE, now()); 
       break;
     case NOPE:
@@ -318,6 +323,9 @@ char* PozoCommand::execute(){
     case PINSTATUS:
       ptr = add_code_and_long(ptr, LONG, exe_pinstatus_pins());
       ptr = add_code_and_long(ptr, LONG, exe_pinstatus_time());
+      break;  
+    case UPTIME:
+      ptr = add_code_and_long(ptr, LONG, (now()-start_time));
       break;  
 
     default:

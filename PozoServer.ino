@@ -22,6 +22,7 @@ static uint16_t port = 80; // Use port 80 - the standard for HTTP
 ETHER_28J60 e;
 char* params;
 
+long int start_time = 0;
 
 // digital pins
 // D0 - RX
@@ -50,6 +51,8 @@ void setup(){
   // set default time  
   setTime(0,0,0,1,1,2000);
  
+  start_time = now();
+  
   e.setup(mac, ip, port);
 
   pinMode(6, OUTPUT);
