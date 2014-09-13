@@ -42,7 +42,7 @@ char* params;
 // D15(A1) – Relay
 // D16(A2) – Relay
 // D17(A3) - Relay
-// D18(A4) - Unused
+// D18(A4) - presure sensor
 // D19(A5) – Unused
 
 void setup(){

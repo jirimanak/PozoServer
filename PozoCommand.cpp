@@ -279,7 +279,12 @@ char* PozoCommand::execute(){
     ptr = add_code_and_long(ptr, COMMAND, command);
     switch ( command ){
     case FREERAM:
-      ptr = add_code_and_time(ptr, LONG, free_ram());
+      Serial.print("FREERAM ");
+      Serial.println(free_ram());
+      ptr = add_code_and_long(ptr, LONG, free_ram());
+      break;
+    case READHEADERVER:
+      ptr = add_code_and_long(ptr, LONG, HEADERVERSION);
       break;
     case GETTIME:
       ptr = add_code_and_time(ptr, LONG, now());
