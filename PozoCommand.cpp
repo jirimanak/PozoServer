@@ -7,7 +7,7 @@
 #include <string.h>
 #include <Time.h>
 
-extern long int start_time;
+extern time_t start_time;
 
 PozoCommand::PozoCommand():
 onewire()

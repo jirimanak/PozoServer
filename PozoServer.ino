@@ -22,10 +22,12 @@ static uint16_t port = 80; // Use port 80 - the standard for HTTP
 ETHER_28J60 e;
 char* params;
 
-long int start_time = 0;
+time_t start_time = 0;
+float temp_eps = 0.1;  
+
 
 // digital pins
-// D0 - RX
+// D0 - RX  
 // D1 - TX
 // D2 - Connects the INT pin of the ENC28J60
 // D3 – 1Wire 
@@ -35,7 +37,7 @@ long int start_time = 0;
 // D7 - Relay
 // D8 - Relay
 // D9 - Relay
-// D10 - Used for SPI Chip Select
+// D10 - Used for SPI Chip Select  
 // D11 - Used for SPI MOSI
 // D12 - Used for SPI MISO
 // D13 - Used for SPI SCK
@@ -43,8 +45,8 @@ long int start_time = 0;
 // D15(A1) – Relay
 // D16(A2) – Relay
 // D17(A3) - Relay
-// D18(A4) - presure sensor
-// D19(A5) – Unused
+// D18(A4) - 1st presure sensor
+// D19(A5) – 2nd presure sensor
 
 void setup(){
 

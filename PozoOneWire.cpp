@@ -7,6 +7,8 @@ PozoOneWire::PozoOneWire():ds(3){
   //byte data[12];
 }
 
+extern float temp_eps;
+
 const char PozoOneWire::l[]= {
   "0123456789ABCDEF"};
 
@@ -30,9 +32,7 @@ int PozoOneWire::get_list(){
       continue;
     }
 */
-    addr2str(sensors[num_sensors], buff);
-    Serial.println(buff);   
-    
+    addr2str(sensors[num_sensors], buff); 
     num_sensors++;  
 
   }
@@ -77,12 +77,28 @@ float PozoOneWire::get_temp(byte addr[]){
 }
 
 float PozoOneWire::get_temp(int idx){
-
   if (num_sensors <= 0) get_list(); 
+  
   if ( idx >= num_sensors ) return -1000.0;
-  float temp = get_temp( sensors[idx]);
-  Serial.println(temp);
-  return temp; 
+  
+  // test if two TEMP readings differ not very much to (temp_eps) 
+  // if ok return value
+  // but only 100 times to
+  // not to be locked in cycle if something wrong
+
+  int i = 0;
+  float diff = 0;
+  float temp1, temp2;
+  do {
+    temp1 = get_temp( sensors[idx] );
+    temp2 = get_temp( sensors[idx] );
+    diff = fabs( temp1-temp2);
+    i = i + 1;
+  } while ( (diff > temp_eps) || (i < 50)); 
+
+  // return the second measurement
+  // as latest measurement
+  return temp2;
 }
 
 // convert 1-wire address to printable string
