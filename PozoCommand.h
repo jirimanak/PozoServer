@@ -3,12 +3,11 @@
 
 #include "PozoTypes.h"
 #include "PozoOneWire.h"
+#include "PozoI2C.h"
 
 #define VALUE_MAXIDX 2
 #define SENDER_ID_LEN 2
 #define RESPONSE_STR_MAXSIZE 100
-
-
 
 class PozoCommand
 {
@@ -20,6 +19,7 @@ class PozoCommand
   time_t t;                        // system time when command recieved
   PinMap pin[8];
   PozoOneWire onewire;
+  PozoI2C i2c;
   
   char response[RESPONSE_STR_MAXSIZE]; // buffer for the response string
   

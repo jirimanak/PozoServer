@@ -1,7 +1,7 @@
 /*
 * properties.h
 *
-* Created on: 13/09/2014
+* Created on: 27/09/2014
 * Author: Norad Sparta
 */
 
@@ -50,13 +50,14 @@
 #define SETLOW     108
 #define SET_TIME   102
 #define STRVALUE   'R'
+#define SVERSION   126
 #define TESTSERVER 504
 #define TIMEDATE   'T'
 #define UPTIME     125
 
 /* OTHER CONSTANTS */
 
-#define HEADERVERSION 102
+#define HEADERVERSION 103
 
 
 #endif /* POZOCODES_H_ */

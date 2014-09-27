@@ -8,6 +8,7 @@
 #include <Time.h>
 
 extern time_t start_time;
+extern int sversion;
 
 PozoCommand::PozoCommand():
 onewire()
@@ -270,6 +271,7 @@ char* PozoCommand::execute(){
   char* ptr = response;
   int len;
   int running;
+  time_t uptime;
   
   if (errorcode != OK) 
   {
@@ -293,9 +295,10 @@ char* PozoCommand::execute(){
     case PING:
       break;
     case SET_TIME:
-      running = now() - start_time;
+      uptime = now() - start_time;
       setTime(value[0].value.timedate_value);
-      start_time = now()- running;
+      //start_time = now()- uptime;
+      start_time = now();
       ptr = add_code_and_time(ptr, TIMEDATE, now()); 
       break;
     case NOPE:
@@ -325,7 +328,11 @@ char* PozoCommand::execute(){
       ptr = add_code_and_long(ptr, LONG, exe_pinstatus_time());
       break;  
     case UPTIME:
-      ptr = add_code_and_long(ptr, LONG, (now()-start_time));
+      uptime = now() - start_time;
+      ptr = add_code_and_long(ptr, LONG, uptime);
+      break;  
+    case SVERSION:
+      ptr = add_code_and_long(ptr, LONG, sversion);
       break;  
 
     default:

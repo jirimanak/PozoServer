@@ -94,7 +94,7 @@ float PozoOneWire::get_temp(int idx){
     temp2 = get_temp( sensors[idx] );
     diff = fabs( temp1-temp2);
     i = i + 1;
-  } while ( (diff > temp_eps) || (i < 50)); 
+  } while ( (diff > temp_eps) || (i < 10)); 
 
   // return the second measurement
   // as latest measurement

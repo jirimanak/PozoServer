@@ -27,9 +27,9 @@ typedef struct _CmdValue {
 
 
 typedef struct _PinMap {
-  int ardu_pin;  // maping to the aruduino physical pin
+  char ardu_pin;  // maping to the aruduino physical pin
   int value; // current value
-  unsigned long end_time;  // end time of the period when to change the value
+  time_t end_time;  // end time of the period when to change the value
 } PinMap;
 
 #endif /* POZOTYPES_H_ */

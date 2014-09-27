@@ -24,6 +24,7 @@ char* params;
 
 time_t start_time = 0;
 float temp_eps = 0.1;  
+int sversion = 10;
 
 
 // digital pins
