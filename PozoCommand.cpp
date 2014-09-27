@@ -297,8 +297,8 @@ char* PozoCommand::execute(){
     case SET_TIME:
       uptime = now() - start_time;
       setTime(value[0].value.timedate_value);
-      //start_time = now()- uptime;
-      start_time = now();
+      start_time = now()- uptime;
+      //start_time = now();
       ptr = add_code_and_time(ptr, TIMEDATE, now()); 
       break;
     case NOPE:
@@ -329,6 +329,7 @@ char* PozoCommand::execute(){
       break;  
     case UPTIME:
       uptime = now() - start_time;
+      Serial.println(uptime);
       ptr = add_code_and_long(ptr, LONG, uptime);
       break;  
     case SVERSION:

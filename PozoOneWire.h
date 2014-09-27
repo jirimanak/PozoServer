@@ -28,3 +28,4 @@ class PozoOneWire
 };
 
 #endif /* POZOONEWIRE_H_ */
+

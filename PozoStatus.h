@@ -11,3 +11,4 @@
 
 
 #endif /* POZOSTATUS_H */
+

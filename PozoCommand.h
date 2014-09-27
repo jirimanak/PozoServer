@@ -58,3 +58,4 @@ class PozoCommand
 
 #endif /* POZOCOMMAND_H_ */
 
+
