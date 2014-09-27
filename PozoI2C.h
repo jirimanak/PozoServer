@@ -7,5 +7,5 @@ class PozoI2C{
 public:  
   PozoI2C();
   
-}
+};
 #endif /* POZOI2C_H_ */

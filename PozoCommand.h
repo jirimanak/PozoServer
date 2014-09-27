@@ -19,7 +19,7 @@ class PozoCommand
   time_t t;                        // system time when command recieved
   PinMap pin[8];
   PozoOneWire onewire;
-  PozoI2C i2c;
+  //PozoI2C i2c;
   
   char response[RESPONSE_STR_MAXSIZE]; // buffer for the response string
   
