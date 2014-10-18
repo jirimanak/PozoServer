@@ -31,9 +31,9 @@ time_t sversion = 1411848576;
 // D0 - RX  
 // D1 - TX
 // D2 - Connects the INT pin of the ENC28J60
-// D3 â€“ 1Wire 
-// D4 â€“ I2C SDA
-// D5 â€“ I2C SCL
+// D3 - 1-Wire 
+// D4 - I2C SDA
+// D5 - I2C SCL
 // D6 - Relay 
 // D7 - Relay
 // D8 - Relay
@@ -42,12 +42,12 @@ time_t sversion = 1411848576;
 // D11 - Used for SPI MOSI
 // D12 - Used for SPI MISO
 // D13 - Used for SPI SCK
-// D14(A0) â€“ Relay
-// D15(A1) â€“ Relay
-// D16(A2) â€“ Relay
+// D14(A0) - Relay
+// D15(A1) - Relay
+// D16(A2) - Relay
 // D17(A3) - Relay
 // D18(A4) - 1st presure sensor
-// D19(A5) â€“ 2nd presure sensor
+// D19(A5) - 2nd presure sensor
 
 void setup(){
 
@@ -85,6 +85,7 @@ void setup(){
 
 }
 
+/*
 
 int parse(char* str, PozoCommand *pc) {
 
@@ -188,6 +189,7 @@ int parse(char* str, PozoCommand *pc) {
 
 }
 
+*/
 
 void loop(){
   char *response;
