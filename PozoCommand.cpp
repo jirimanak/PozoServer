@@ -200,77 +200,12 @@ char* PozoCommand::print_all(){
   return response;
 }
 
-int PozoCommand::exe_sethigh(int pinnum){
-  if (pinnum < 0) return OUTOFRANGE;
-  if (pinnum > 7) return OUTOFRANGE;
-  digitalWrite(pin[pinnum].ardu_pin, HIGH);
-  pin[pinnum].value = 1;
-  pin[pinnum].end_time = 0;
-  return OK;
-}
-
-int PozoCommand::exe_setlow(int pinnum, time_t period){
-  if (pinnum < 0) return OUTOFRANGE;
-  if (pinnum > 7) return OUTOFRANGE;
-  digitalWrite(pin[pinnum].ardu_pin, LOW);
-  pin[pinnum].value = 0;
-  if (period == 0) {
-     pin[pinnum].end_time = 0;
-  }
-  else {
-    pin[pinnum].end_time = now() + period;
-  }
-  return OK;
-}
-
-
-int PozoCommand::exe_setbinary(char values, time_t period){
-  int i;
-  for ( i = 0; i<8; i++) {
-    // test the bit on the positon 'i'
-    if ( (values & (1<<(i))) ){
-      // logic 1 = high
-      exe_sethigh(7-i);
-    }
-    else {
-      // logic 0 = low
-      exe_setlow(7-i, period);
-    }
-  }
-  return OK;
-
-}
-
-int PozoCommand::exe_pinstatus_pins(){ 
-    int result = 0, pow = 1;
-    for ( int i = 7; i >= 0; --i, pow <<= 1 )
-        result += pin[i].value * pow;
-    Serial.println(result);    
-    return result;
-}
-
-int PozoCommand::exe_pinstatus_time(){
-  int maxtime = 0;
-  for (int i = 0; i < 8; i++) {
-     maxtime = max(maxtime, pin[i].end_time);
-  } 
-  if (maxtime != 0 )
-     return pin[0].end_time - now();
-  else 
-     return 0;
-}
-
-float PozoCommand::exe_read1wtemp(int sensor){
-  float result = OUTOFRANGE;
-  if (!((sensor < 0) || (sensor > 7)))
-     result = onewire.get_temp(sensor);
-  return result;
-}
 
 char* PozoCommand::execute(){
   char* ptr = response;
   int len;
   int running;
+  float temp;
   time_t uptime;
   
   if (errorcode != OK) 
@@ -321,7 +256,9 @@ char* PozoCommand::execute(){
       ptr = add_code_and_string(ptr, STRVALUE, exe_onewire_addr(value[0].value.long_value-1) );
       break;  
     case READ1WTEMP:
-      ptr = add_code_and_double(ptr, DOUBLE, exe_read1wtemp((double)value[0].value.long_value-1));
+      temp = exe_read1wtemp((double)value[0].value.long_value-1);
+      if ( temp <= -1000.0) { errorcode = OUTOFRANGE;}
+      ptr = add_code_and_double(ptr, DOUBLE, temp);
       break;  
     case PINSTATUS:
       ptr = add_code_and_long(ptr, LONG, exe_pinstatus_pins());
@@ -337,6 +274,7 @@ char* PozoCommand::execute(){
       break;  
 
     default:
+      errorcode = UNKNWNCMD;
       break;
     }
 
@@ -346,6 +284,7 @@ char* PozoCommand::execute(){
   ptr[0] = '\0';
   return response;
 }
+
 
 int PozoCommand::check_time(time_t acttm) {
   for (int i = 0; i<8;i++){
@@ -370,5 +309,69 @@ char* PozoCommand::exe_onewire_addr(int num){
   return onewire.get_addr(num);
 }
 
+int PozoCommand::exe_pinstatus_pins(){ 
+    int result = 0, pow = 1;
+    for ( int i = 7; i >= 0; --i, pow <<= 1 )
+        result += pin[i].value * pow;
+    Serial.println(result);    
+    return result;
+}
+
+int PozoCommand::exe_pinstatus_time(){
+  int maxtime = 0;
+  for (int i = 0; i < 8; i++) {
+     maxtime = max(maxtime, pin[i].end_time);
+  } 
+  if (maxtime != 0 )
+     return pin[0].end_time - now();
+  else 
+     return 0;
+}
+
+float PozoCommand::exe_read1wtemp(int sensor){
+  float result = OUTOFRANGE;
+  if (!((sensor < 0) || (sensor > 7)))
+     result = onewire.get_temp(sensor);
+  return result;
+}
+
+int PozoCommand::exe_sethigh(int pinnum){
+  if (pinnum < 0) return OUTOFRANGE;
+  if (pinnum > 7) return OUTOFRANGE;
+  digitalWrite(pin[pinnum].ardu_pin, HIGH);
+  pin[pinnum].value = 1;
+  pin[pinnum].end_time = 0;
+  return OK;
+}
+
+int PozoCommand::exe_setlow(int pinnum, time_t period){
+  if (pinnum < 0) return OUTOFRANGE;
+  if (pinnum > 7) return OUTOFRANGE;
+  digitalWrite(pin[pinnum].ardu_pin, LOW);
+  pin[pinnum].value = 0;
+  if (period == 0) {
+     pin[pinnum].end_time = 0;
+  }
+  else {
+    pin[pinnum].end_time = now() + period;
+  }
+  return OK;
+}
 
 
+int PozoCommand::exe_setbinary(char values, time_t period){
+  int i;
+  for ( i = 0; i<8; i++) {
+    // test the bit on the positon 'i'
+    if ( (values & (1<<(i))) ){
+      // logic 1 = high
+      exe_sethigh(7-i);
+    }
+    else {
+      // logic 0 = low
+      exe_setlow(7-i, period);
+    }
+  }
+  return OK;
+
+}

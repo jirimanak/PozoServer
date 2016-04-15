@@ -1,7 +1,7 @@
 /*
 * properties.h
 *
-* Created on: 27/09/2014
+* Created on: 18/10/2014
 * Author: Norad Sparta
 */
 
@@ -23,6 +23,7 @@
 #define GETPIN     109
 #define GETTIME    106
 #define INTEGER    'I'
+#define ISALIVE    127
 #define JARDIN     501
 #define JSON       602
 #define LONG       'L'
@@ -53,11 +54,12 @@
 #define SVERSION   126
 #define TESTSERVER 504
 #define TIMEDATE   'T'
+#define UNKNWNCMD  5
 #define UPTIME     125
 
 /* OTHER CONSTANTS */
 
-#define HEADERVERSION 103
+#define HEADERVERSION 105
 
 
 #endif /* POZOCODES_H_ */

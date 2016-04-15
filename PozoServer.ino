@@ -1,13 +1,14 @@
+#include <ETHER_28J60.h>
+#include <enc28j60.h>
+#include <ip_arp_udp_tcp.h>
+#include <net.h>
 #include <Time.h>
 #include "PozoCommand.h"
 #include "PozoCodes.h"
 #include "PozoTypes.h"
 #include <string.h>
-#include "ETHER_28J60.h"
-#include <EtherShield.h>
 #include "PozoFunctions.h"
 #include <OneWire.h>
-
 
 PozoCommand pc;
 
@@ -24,7 +25,7 @@ char* params;
 
 time_t start_time = 0;
 float temp_eps = 0.1;  
-time_t sversion = 1411848576;
+time_t sversion = 501;
 
 
 // digital pins
@@ -85,111 +86,6 @@ void setup(){
 
 }
 
-/*
-
-int parse(char* str, PozoCommand *pc) {
-
-  //  S[ss]C[ccc]E[eee]D[dddd.dd]L[llllll]
-
-  char *pch;
-  char vtype = NOTYPE;
-  char *sp;
-
-  Serial.print("INPUT: ");
-  Serial.println(str);
-  
-  //
-  pch = strtok_r (str,":",&sp);
-
-  pc->t = now();
-
-  // idx for value array  value[0] value[1] ...
-  int i = 0;
-
-
-  while (pch != NULL){
-
-    // type is unknown - set it
-    if (vtype == NOTYPE){
-      vtype = pch[0];
-      if (vtype == '\0') break;
-    }
-    else {
-      // if type is already known parse value
-      switch (vtype){
-      case INTEGER:
-      case LONG:
-        Serial.print("LONG: ");
-        if (i >= VALUE_MAXIDX) break;
-        pc->value[i].value_type = vtype;
-        pc->value[i].value.long_value = strtol(pch, NULL, 10);
-        Serial.println(pc->value[i].value.long_value);
-        ++i;
-        break;
-      case FLOAT:
-      case DOUBLE:
-        Serial.print("DOUBLE: ");
-        if (i >= VALUE_MAXIDX) break;
-        pc->value[i].value_type = vtype;
-        pc->value[i].value.double_value = strtod(pch, NULL);
-        Serial.println(pc->value[i].value.double_value);
-        ++i;
-        break;
-      case TIMEDATE:
-        // time is in microseconds from 1.1.1970
-        Serial.print("TIMEDATE: ");
-        if (i >= VALUE_MAXIDX) break;
-        pc->value[i].value_type = vtype;
-        pc->value[i].value.timedate_value = strtoul(pch, NULL,10);
-        Serial.println(pc->value[i].value.timedate_value);
-        ++i;
-        break;
-      case ERRORCODE:
-        Serial.print("ERRORCODE: ");
-        pc->errorcode = strtol(pch, NULL, 10);
-        Serial.println(pc->errorcode);
-        break;
-      case SENDER:
-        Serial.print("SENDER: ");
-        pc->sender = strtol(pch, NULL, 10);                      
-        Serial.println(pc->sender);
-        break;
-      case COMMAND:
-        pc->command = strtol(pch, NULL, 10);
-        Serial.print("Command: ");
-        Serial.println(pc->command);
-        break;
-     case BYTE:
-        Serial.print("BYTE: ");
-        if (i >= VALUE_MAXIDX) break;
-        pc->value[i].value_type = vtype;
-        pc->value[i].value.byte_value = (char)strtol(pch, NULL, 10);
-        Serial.println(pc->value[i].value.byte_value);
-        ++i;
-        break;
-     case STRVALUE:
-        Serial.print("STRING VALUE: ");
-        if (i >= VALUE_MAXIDX) break;
-        pc->value[i].value_type = vtype;
-        strcpy(pc->value[i].value.str_value, pch);
-        Serial.println(pc->value[i].value.byte_value);
-        ++i;
-        break;
-
-      default:
-        pc->errorcode = BADTYPE;
-        return pc->errorcode;
-      }
-      vtype = NOTYPE;
-    }
-    pch = strtok_r (NULL,":",&sp);
-  }
-
-  return OK;
-
-}
-
-*/
 
 void loop(){
   char *response;
