@@ -8,5 +8,7 @@ char* add_code_and_long(char* buff, long code, long val);
 char* add_code_and_time(char* buff, long code, time_t val);
 char* add_code_and_double(char* buff, long code, double val);
 char* add_code_and_string(char* buff, long code, char* val);
+int store_ip_address(uint8_t *ip );
+int recall_ip_address(uint8_t *ip);
 #endif /* POZOFUNCTIONS_H_ */
 

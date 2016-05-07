@@ -1,11 +1,19 @@
+
+
+
+
+
+#include <arduino.h>
+
+
+#include <string.h>
+#include <Time.h>
+
 #include "PozoCommand.h"
 #include "PozoCodes.h"
 #include "PozoTypes.h"
 #include "PozoFunctions.h"
-#include <arduino.h>
 
-#include <string.h>
-#include <Time.h>
 
 extern time_t start_time;
 extern int sversion;
@@ -93,6 +101,11 @@ int PozoCommand::set_value_timedate(time_t num, int idx) {
 int PozoCommand::parse(char* str) {
 
   //  S[ss]C[ccc]E[eee]D[dddd.dd]L[llllll]
+  //  S: sender
+  //  C: command code
+  //  E: Error
+  //  D: double
+  //  L: longvalue
 
   char *pch;
   char vtype = NOTYPE;
@@ -272,7 +285,7 @@ char* PozoCommand::execute(){
     case SVERSION:
       ptr = add_code_and_long(ptr, LONG, sversion);
       break;  
-
+      
     default:
       errorcode = UNKNWNCMD;
       break;
@@ -375,3 +388,5 @@ int PozoCommand::exe_setbinary(char values, time_t period){
   return OK;
 
 }
+
+

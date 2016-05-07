@@ -1,3 +1,5 @@
+#include <EEPROM.h>
+
 #ifndef POZOCOMMAND_H_
 #define POZOCOMMAND_H_
 
@@ -46,6 +48,7 @@ class PozoCommand
   int exe_pinstatus_pins();
   int exe_pinstatus_time();
 
+  int exe_setIPaddress(char b1, char b2, char b3, char b4);
   int check_time(time_t acttm);
   
   private:

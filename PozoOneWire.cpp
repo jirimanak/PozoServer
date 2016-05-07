@@ -15,7 +15,7 @@ const char PozoOneWire::l[]= {
 
 int PozoOneWire::get_list(){
 
-  Serial.println("Pozoz one wire");
+  Serial.println("Pozo one wire");
   char buff[24];
   
   ds.reset_search();

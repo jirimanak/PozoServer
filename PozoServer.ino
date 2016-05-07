@@ -1,3 +1,7 @@
+#include <EEPROM.h>
+
+
+
 #include <ETHER_28J60.h>
 #include <enc28j60.h>
 #include <ip_arp_udp_tcp.h>
@@ -10,13 +14,21 @@
 #include "PozoFunctions.h"
 #include <OneWire.h>
 
+
+/***********************************************
+
+  This is to be compiled with Arduino 1.05-r2
+
+************************************************/
+
+
 PozoCommand pc;
 
 static uint8_t mac[6] = {
   0x54, 0x55, 0x58, 0x10, 0x00, 0x24};   // this just needs to be unique for your network, 
 
 static uint8_t ip[4] = {
-  192, 168, 0, 15}; // IP address for the webserver
+  192, 168, 224, 15}; // IP address for the webserver
 
 static uint16_t port = 80; // Use port 80 - the standard for HTTP
 
@@ -55,10 +67,25 @@ void setup(){
   // set default time  
   setTime(0,0,0,1,1,2000);
  
+  // store time counter
   start_time = now();
+
+  // get own IP address
+  //
+  // if IP address is not stored
+  // set to default
+  /*
+  if (!recall_ip_address(ip)){
+    // default IP address 192.168.244.15
+    ip[0] = 192;
+    ip[1] = 168;
+    ip[2] = 224;
+    ip[3] = 115;
+  }
+  */
   
   e.setup(mac, ip, port);
-
+    
   pinMode(6, OUTPUT);
   pinMode(7, OUTPUT);
   pinMode(8, OUTPUT);
@@ -84,6 +111,7 @@ void setup(){
   delay(500);
   digitalWrite(16, 1);
 
+  
 }
 
 
